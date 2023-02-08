@@ -22,9 +22,6 @@ plaintext = private_key.decrypt(
   padding.PKCS1v15() # Noncompliant
 )
 
-
-
-
 #######################
 # Insecure temporary file creation methods should not be used
 
@@ -114,28 +111,6 @@ def hello(request):
     row = cursor.fetchone()
     return HttpResponse("Hello %s" % row[0])
 	
-	
-	
-##############################
-# XML parsers should not be vulnerable to XXE attacks
-
-parser = etree.XMLParser() # Noncompliant: by default resolve_entities is set to true
-tree1 = etree.parse('ressources/xxe.xml', parser)
-root1 = tree1.getroot()
-
-parser = etree.XMLParser(resolve_entities=True) # Noncompliant
-tree1 = etree.parse('ressources/xxe.xml', parser)
-root1 = tree1.getroot()
-
-parser = etree.XMLParser(resolve_entities=True) # Noncompliant
-treexsd = etree.parse('ressources/xxe.xsd', parser)
-rootxsd = treexsd.getroot()
-schema = etree.XMLSchema(rootxsd)
-
-ac = etree.XSLTAccessControl(read_network=True, write_network=False)  # Noncompliant, read_network is set to true/network access is authorized
-transform = etree.XSLT(rootxsl, access_control=ac)
-
-
 ###################################
 # Databases should be password-protected
 
