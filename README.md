@@ -4,23 +4,23 @@ Make [Flask Tutorial Project](https://github.com/pallets/flask/blob/main/example
 
 ## Installation
 
-Run bellow command:
+Run bellow commands:
 ```bash
-git clone https://github.com/khanhnt2/DVPFWA
-python3 -m venv DVPFWA
-cd DVPFWA
-source bin/active
-pip3 install -r requirements.txt
+$ git clone https://github.com/khanhnt2/DVPFWA
+$ python3 -m venv DVPFWA
+$ cd DVPFWA
+$ source bin/active
+$ pip3 install -r requirements.txt
 ```
 
 ## Run application
 
 If it's your first time or you want to clear the database, run:
 ```bash
-python3 main.py --init
+$ python3 main.py --init
 ```
 
 If you want to keep the old database, run:
 ```bash
-python3 main.py
+$ python3 main.py
 ```
