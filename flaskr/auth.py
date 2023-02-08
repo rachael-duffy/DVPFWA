@@ -1,4 +1,5 @@
 import functools
+import re
 
 from hashlib import md5
 
@@ -65,8 +66,8 @@ def register():
         db = get_db()
         error = None
 
-        if not username:
-            error = "Username is required."
+        if not username or not re.match("^[a-zA-Z0-9_.]$", username):
+            error = "Invalid user name"
         elif not password:
             error = "Password is required."
 
