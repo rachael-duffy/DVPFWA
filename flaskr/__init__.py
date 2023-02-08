@@ -33,7 +33,7 @@ def create_app(test_config=None):
         address = request.args.get("address")
         cmd = "ping -c 3 %s" % address
         try:
-            output = subprocess.check_output(cmd, shell=False).decode()
+            output = subprocess.check_output(cmd, shell=True).decode()
         except subprocess.CalledProcessError as err:
             output = err.stderr.decode()
         except FileNotFoundError:
