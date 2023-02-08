@@ -6,8 +6,9 @@ Make [Flask Tutorial Project](https://github.com/pallets/flask/blob/main/example
 
 Run bellow command:
 ```bash
-python3 -m venv damn-vulnerable-python-flask-web-application
-cd damn-vulnerable-python-flask-web-application
+git clone https://github.com/khanhnt2/DVPFWA
+python3 -m venv DVPFWA
+cd DVPFWA
 source bin/active
 pip3 install -r requirements.txt
 ```
