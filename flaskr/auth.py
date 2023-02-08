@@ -1,5 +1,7 @@
 import functools
 
+from hashlib import md5
+
 from flask import Blueprint
 from flask import flash
 from flask import g
@@ -8,13 +10,20 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import url_for
-from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
 
 from flaskr.db import get_db
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
+def generate_password_hash(passwd: str):
+    """Hasing password by MD5 algorithm"""
+    result = md5(passwd.encode())
+    return result.hexdigest()
+
+def check_password_hash(db_hash: str, user_passwd: str):
+    """Compare user's request password with user's password in database"""
+    user_hash = md5(user_passwd.encode())
+    return user_hash.hexdigest() == db_hash
 
 def login_required(view):
     """View decorator that redirects anonymous users to the login page."""

@@ -1,6 +1,8 @@
 import os
+import json
+import subprocess
 
-from flask import Flask
+from flask import Flask, request
 
 
 def create_app(test_config=None):
@@ -26,9 +28,18 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route("/hello")
-    def hello():
-        return "Hello, World!"
+    @app.route("/ping")
+    def ping():
+        address = request.args.get("address")
+        cmd = "ping -c 3 %s" % address
+        try:
+            output = subprocess.check_output(cmd, shell=False).decode()
+        except subprocess.CalledProcessError as err:
+            output = err.stderr.decode()
+        except FileNotFoundError:
+            output = "Ping command doesn't exsist in the system"
+        result = {"output": output}
+        return json.dumps(result)
 
     # register the database commands
     from flaskr import db
