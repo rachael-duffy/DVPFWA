@@ -66,7 +66,7 @@ def register():
         db = get_db()
         error = None
 
-        if not username or not re.match("^[a-zA-Z0-9_.]$", username):
+        if not username or not re.match("^[a-zA-Z0-9_.]+$", username):
             error = "Invalid user name"
         elif not password:
             error = "Password is required."
@@ -85,6 +85,7 @@ def register():
             else:
                 # Success, go to the login page.
                 return redirect(url_for("auth.login"))
+
 
         flash(error)
 
