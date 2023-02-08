@@ -8,7 +8,6 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import hashes
 
 # Example for a symmetric cipher: AES
-aes = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())  # Noncompliant
 aes = Cipher(algorithms.AES(key), modes.ECB(), backend=default_backend())  # Noncompliant
 
 # Example for a asymmetric cipher: RSA
@@ -21,15 +20,6 @@ plaintext = private_key.decrypt(
   ciphertext,
   padding.PKCS1v15() # Noncompliant
 )
-
-#######################
-# Insecure temporary file creation methods should not be used
-
-import tempfile
-
-filename = tempfile.mktemp() # Noncompliant
-tmp_file = open(filename, "w+")
-
 
 ##################
 # Dynamic code execution should not be vulnerable to injection attacks
@@ -82,7 +72,6 @@ def yaml_load():
 from cryptography.hazmat.primitives.asymmetric import rsa, ec, dsa
 
 dsa.generate_private_key(key_size=1024, backend=backend) # Noncompliant
-rsa.generate_private_key(public_exponent=999, key_size=2048, backend=backend) # Noncompliant
 ec.generate_private_key(curve=ec.SECT163R2, backend=backend)  # Noncompliant
 
 #############################
@@ -196,36 +185,4 @@ def route():
     headers = Headers()
     headers.add("Content-Type", content_type) # Noncompliant
     response.headers = headers
-    return response
-	
-import django.http
-
-def route(request):
-    content_type = request.GET.get("Content-Type")
-    response = django.http.HttpResponse()
-    response.__setitem__('Content-Type', content_type) # Noncompliant
-    return response
-	
-	
-###########################################
-# Regular expressions should not be vulnerable to Denial of Service attacks
-
-from flask import request
-import re
-
-@app.route('/upload')
-def upload():
-    username = request.args.get('username')
-    filename = request.files.get('attachment').filename
-
-    re.search(username, filename) # Noncompliant
-
-#########################################
-# Hashes should include an unpredictable salt
-
-import crypt
-from hashlib import pbkdf2_hmac
-
-hash = pbkdf2_hmac('sha256', password, b'D8VxSmTZt2E2YV454mkqAY5e', 100000)    # Noncompliant: salt is hardcoded
-
-
+    return response	
