@@ -24,3 +24,5 @@ If you want to keep the old database, run:
 ```bash
 $ python3 main.py
 ```
+
+Then open http://127.0.0.1:5000 in a browser.
